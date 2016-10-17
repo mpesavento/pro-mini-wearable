@@ -1,15 +1,19 @@
 #include <FastLED.h>
 #include "btn.h"
 
-#define LEDS_PIN   9
-#define CLOCK_PIN 8
-#define NUM_LEDS  150
+#define DATA_PIN   9
+#define CLOCK_PIN  8
+#define CHIPSET    APA102
+#define COLOR_ORDER BGR  // most of the 10mm black APA102
+
 #define FRAMES_PER_SECOND  120
 
 #define SWITCH_PIN 10
 #define LONG_PRESS_TIME 1000
 
 #define BRIGHTNESS_PIN  A0
+
+#define NUM_LEDS  150
 
 CRGB leds[NUM_LEDS];
 Btn btn(SWITCH_PIN);
@@ -19,7 +23,7 @@ bool boa_mode = true;
 
 void setup() {
   // Leds
-  FastLED.addLeds<WS2811, LEDS_PIN, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection( TypicalSMD5050 );
   FastLED.setMaxPowerInVoltsAndMilliamps(5, 2000);
 
   // Switch
